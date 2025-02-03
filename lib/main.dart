@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mygo_img_picker/pages/FloatingBall.dart';
+import 'package:mygo_img_picker/pages/MyHomePage.dart';
 
 void main() async {
-  // await getKeyword("愛音");
   runApp(MyApp());
 }
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FloatingBall(),
+      home: MyHomePage(),
     );
   }
 }
