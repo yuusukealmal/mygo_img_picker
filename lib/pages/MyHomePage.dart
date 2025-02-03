@@ -4,7 +4,8 @@ import 'package:mygo_img_picker/api/searchString.dart';
 import 'package:mygo_img_picker/class/content.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  final String title;
+  const MyHomePage({super.key, required this.title});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movable Floating Ball'),
+        title: Text(widget.title),
       ),
       body: Stack(
         children: [
