@@ -45,7 +45,7 @@ jobs:
       - name: Create Git Tag
         run: |
           git tag "release-${{ env.hash }}"
-          git push https://x-access-token:${{ secrets.BUILD_TOKEN }}@github.com/yuusukealmal/mygo_img_picker.git "release-${{ env.hash }}"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yuusukealmal/mygo_img_picker.git "release-${{ env.hash }}"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
