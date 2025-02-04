@@ -1,0 +1,55 @@
+name: Apk Build
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.3"
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "12.x"
+          cache: "gradle"
+        id: java
+
+      - name: Build Android APK
+        run: |
+          flutter build apk --release
+        shell: bash
+
+      - name: Get Short Commit Hash
+        id: commit
+        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Create Git Tag
+        run: |
+          git tag "release-${{ env.hash }}"
+          git push origin "release-${{ env.hash }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "release-${{ env.hash }}"
+          body: "New APK build from commit ${{ github.sha }}"
+          draft: false
+          prerelease: false
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
