@@ -1,6 +1,5 @@
 name: Apk Build
-
-on:
+'on':
   push:
     branches:
       - main
@@ -13,7 +12,7 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
         with:
             submodules: "true"
@@ -21,14 +20,14 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.27.3"
+          flutter-version: 3.27.3
 
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu"
-          java-version: "17.x"
-          cache: "gradle"
+          distribution: zulu
+          java-version: 17.x
+          cache: gradle
         id: java
 
       - name: Update submodules
@@ -46,7 +45,7 @@ jobs:
       - name: Create Git Tag
         run: |
           git tag "release-${{ env.hash }}"
-          git push origin "release-${{ env.hash }}"
+          git push https://x-access-token:${{ secrets.BUILD_TOKEN }}@github.com/yuusukealmal/mygo_img_picker.git "release-${{ env.hash }}"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -57,4 +56,16 @@ jobs:
           prerelease: false
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Update version.json
+        run: |
+          echo "{\"hash\": \"${GITHUB_SHA}\"}" > version.json
+
+      - name: Commit and push version.json
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add version.json
+          git commit -m "Update version.json with commit hash $GITHUB_SHA"
+          git push origin main
