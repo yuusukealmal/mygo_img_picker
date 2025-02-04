@@ -13,7 +13,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  permission_handler: ^11.0.0
   flutter_overlay_window: ^0.4.5
   flutter_launcher_icons: ^0.14.3
 
