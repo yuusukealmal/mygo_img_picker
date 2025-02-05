@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:mygo_img_picker/class/content.dart';
+import 'package:mygo_img_picker/class/NygoContent.dart';
 
 Future<List<MYGO>> getKeyword(String keyword) async {
   if (keyword.replaceAll(" ", "") == "") return [];
