@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
             return Scaffold(
                 body: Center(child: Text('Error: ${snapshot.error}')));
           } else {
-            debugPrint(snapshot.data);
             if (snapshot.data!.isEmpty || snapshot.data == null) {
               return MyHomePage(title: 'Mygo Image Picker');
             } else {
