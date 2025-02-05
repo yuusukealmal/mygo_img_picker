@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'dart:io';
+import 'package:mygo_img_picker/api/getJsonFile.dart';
 import 'package:mygo_img_picker/class/content.dart';
 
 Future<List<MYGO>> getKeyword(String keyword) async {
-  if (keyword.replaceAll(" ", "") == "") return [];
   List<MYGO> res = [];
-  final jsonString = await rootBundle.loadString('assets/data.json');
+  if (keyword.replaceAll(" ", "") == "") return res;
+  File f = await getJsonFile();
+  String jsonString = f.readAsStringSync();
   final data = jsonDecode(jsonString);
   data.forEach((element) {
     if (element["text"].contains(keyword)) {
