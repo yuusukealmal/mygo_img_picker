@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mygo_img_picker/api/getJsonFile.dart';
 import 'package:mygo_img_picker/api/imgDownload.dart';
+import 'package:mygo_img_picker/api/reFreshData.dart';
 import 'package:mygo_img_picker/api/searchString.dart';
 import 'package:mygo_img_picker/class/content.dart';
 
@@ -23,6 +26,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _checkifNull() async {
+    File f = await getJsonFile();
+    if (await f.exists() == false) {
+      await reFreshData();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkifNull();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -31,6 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: const Color.fromARGB(101, 162, 35, 201),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () async {
+              String res = await reFreshData();
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(res)));
+            },
+          ),
+          SizedBox(width: 16),
+        ],
       ),
       body: Stack(
         children: [
