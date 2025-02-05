@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<String> isLatest() async {
   final response = await http.get(Uri.parse(
-      'https://raw.githubusercontent.com/yuusukealmal/mygo_img_picker/refs/heads/main/version.json'));
+      'https://raw.githubusercontent.com/yuusukealmal/mygo_img_picker/refs/heads/main/version/version.json'));
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     final remoteversion = data['hash'];
