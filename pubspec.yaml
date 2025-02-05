@@ -32,3 +32,4 @@ flutter:
 
   assets:
     - assets/data.json
+    - version/version.json
