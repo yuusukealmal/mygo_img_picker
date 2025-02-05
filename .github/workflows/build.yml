@@ -3,6 +3,8 @@ name: Apk Build
   push:
     branches:
       - main
+    paths-ignore:
+      - 'version/version.json'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -15,7 +17,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-            submodules: "true"
+          submodules: true
+          fetch-depth: 0
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -33,19 +36,31 @@ jobs:
       - name: Update submodules
         run: git submodule update --init --recursive
 
+      - name: Get Commit Hash
+        id: commit
+        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Update version.json
+        run: |
+          echo "{\"hash\": \"${{ env.hash }}\"}" > version/version.json
+
+      - name: Commit and push version.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions@github.com"
+          git add version/version.json
+          git commit -m "Update version.json with commit hash ${{ env.hash }}"
+          git push origin main
+
       - name: Build Android APK
         run: |
           flutter build apk --release
         shell: bash
 
-      - name: Get Commit Hash
-        id: commit
-        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       - name: Create Git Tag
         run: |
           git tag "release-${{ env.hash }}"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yuusukealmal/mygo_img_picker.git "release-${{ env.hash }}"
+          git push origin "release-${{ env.hash }}"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -56,16 +71,4 @@ jobs:
           prerelease: false
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Update version.json
-        run: |
-          echo "{\"hash\": \"${GITHUB_SHA}\"}" > version/version.json
-
-      - name: Commit and push version.json
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions@github.com"
-          git add version/version.json
-          git commit -m "Update version.json with commit hash $GITHUB_SHA"
-          git push origin main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
