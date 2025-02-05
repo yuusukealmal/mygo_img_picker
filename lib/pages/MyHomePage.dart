@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mygo_img_picker/api/imgDownload.dart';
 import 'package:mygo_img_picker/api/searchString.dart';
-import 'package:mygo_img_picker/class/content.dart';
+import 'package:mygo_img_picker/class/NygoContent.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;

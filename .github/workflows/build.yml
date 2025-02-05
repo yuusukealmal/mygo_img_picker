@@ -60,12 +60,12 @@ jobs:
 
       - name: Update version.json
         run: |
-          echo "{\"hash\": \"${GITHUB_SHA}\"}" > version.json
+          echo "{\"hash\": \"${GITHUB_SHA}\"}" > version/version.json
 
       - name: Commit and push version.json
         run: |
-          git config user.name "GitHub Actions"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions@github.com"
-          git add version.json
+          git add version/version.json
           git commit -m "Update version.json with commit hash $GITHUB_SHA"
           git push origin main
