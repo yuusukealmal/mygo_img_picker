@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _checkifNull();
+    _search();
   }
 
   @override

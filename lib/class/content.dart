@@ -11,7 +11,7 @@ class MYGO {
 
   String text;
   int season;
-  String episode;
+  int episode;
   int frameStart;
   int framePrefer;
   int frameEnd;
