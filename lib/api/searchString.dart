@@ -13,10 +13,13 @@ Future<List<MYGO>> getKeyword(String keyword) async {
     if (element["text"].contains(keyword)) {
       MYGO mygo = MYGO(
         text: element["text"],
+        season: element["season"],
         episode: element["episode"],
         frameStart: element["frame_start"],
+        framePrefer: element["frame_prefer"],
         frameEnd: element["frame_end"],
         segmentID: element["segment_id"],
+        characterID: element["character"],
       );
       res.add(mygo);
     }

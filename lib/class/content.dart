@@ -1,18 +1,24 @@
 class MYGO {
   MYGO(
       {required this.text,
+      required this.season,
       required this.episode,
       required this.frameStart,
+      required this.framePrefer,
       required this.frameEnd,
-      required this.segmentID});
+      required this.segmentID,
+      required this.characterID});
 
   String text;
+  int season;
   String episode;
   int frameStart;
+  int framePrefer;
   int frameEnd;
   int segmentID;
+  int characterID;
 
   String ImgURL() {
-    return "https://mygodata.0m0.uk/images/${episode}_$frameStart.jpg";
+    return "https://mypic.0m0.uk/images/$season/$episode/$framePrefer.jpg";
   }
 }
