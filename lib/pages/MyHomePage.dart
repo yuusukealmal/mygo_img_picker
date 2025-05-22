@@ -102,136 +102,136 @@ class _MyHomePageState extends State<MyHomePage> {
                         : GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
+                              crossAxisCount:
+                                  (MediaQuery.of(context).size.width ~/ 200)
+                                      .clamp(2, 6),
                               childAspectRatio: 2,
                             ),
                             itemCount: _keywords.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                  onLongPress: () {
-                                    MYGO current = _keywords[index];
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => Dialog(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.all(16),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                "詳細資訊",
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                onLongPress: () {
+                                  MYGO current = _keywords[index];
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: Container(
+                                        padding: EdgeInsets.all(16),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              "詳細資訊",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              Divider(),
-                                              Text("Text: ${current.text}"),
-                                              SizedBox(height: 8),
-                                              Text(
-                                                  "Episode: ${current.episode}"),
-                                              SizedBox(height: 8),
-                                              Text(
-                                                  "Frame Start: ${current.frameStart}"),
-                                              SizedBox(height: 8),
-                                              Text(
-                                                  "Frame End: ${current.frameEnd}"),
-                                              SizedBox(height: 8),
-                                              Text(
-                                                  "Segment ID: ${current.segmentID}"),
-                                              SizedBox(height: 16),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  TextButton(
-                                                    onPressed: () async {
-                                                      await downloadImage(
-                                                          context,
-                                                          _keywords[index]
-                                                              .ImgURL());
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      "Copy Image",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.black),
-                                                    ),
+                                            ),
+                                            Divider(),
+                                            Text("Text: ${current.text}"),
+                                            SizedBox(height: 8),
+                                            Text("Episode: ${current.episode}"),
+                                            SizedBox(height: 8),
+                                            Text(
+                                                "Frame Start: ${current.frameStart}"),
+                                            SizedBox(height: 8),
+                                            Text(
+                                                "Frame End: ${current.frameEnd}"),
+                                            SizedBox(height: 8),
+                                            Text(
+                                                "Segment ID: ${current.segmentID}"),
+                                            SizedBox(height: 16),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    await downloadImage(
+                                                        context,
+                                                        _keywords[index]
+                                                            .ImgURL());
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    "Copy Image",
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black),
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Clipboard.setData(
-                                                          ClipboardData(
-                                                        text: current.ImgURL(),
-                                                      ));
-                                                      Navigator.pop(context);
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(SnackBar(
-                                                              content: Text(
-                                                                  'Image URL copied to clipboard!')));
-                                                    },
-                                                    child: Text(
-                                                      "Copy Image URL",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.black),
-                                                    ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Clipboard.setData(
+                                                        ClipboardData(
+                                                      text: current.ImgURL(),
+                                                    ));
+                                                    Navigator.pop(context);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                'Image URL copied to clipboard!')));
+                                                  },
+                                                  child: Text(
+                                                    "Copy Image URL",
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black),
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      "Cancel",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.red),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.red),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Card(
+                                  margin: EdgeInsets.all(3.0),
+                                  color: Colors.white,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            await downloadImage(context,
+                                                _keywords[index].ImgURL());
+                                          },
+                                          child: Image.network(
+                                            _keywords[index].ImgURL(),
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                  child: Card(
-                                    margin: EdgeInsets.all(3.0),
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              await downloadImage(context,
-                                                  _keywords[index].ImgURL());
-                                            },
-                                            child: Image.network(
-                                              _keywords[index].ImgURL(),
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 8),
+                                        child: Text(
+                                          _keywords[index].text,
+                                          style: TextStyle(color: Colors.black),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 8),
-                                          child: Text(
-                                            _keywords[index].text,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ));
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
                             },
                           ),
                   ),
