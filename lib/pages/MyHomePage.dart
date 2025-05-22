@@ -131,6 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ),
                                             ),
                                             Divider(),
+                                            Image.network(
+                                              current.ImgURL(),
+                                              height: 250,
+                                            ),
+                                            SizedBox(height: 8),
                                             Text("Text: ${current.text}"),
                                             SizedBox(height: 8),
                                             Text("Episode: ${current.episode}"),
